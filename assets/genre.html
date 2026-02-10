@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Choose Genre</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+body{
+  background:#000;
+  color:#fff;
+  min-height:100vh;
+}
+
+.container{
+  max-width:420px;
+  margin:auto;
+  padding:64px 24px 48px;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+}
+
+.progress{
+  display:flex;
+  gap:8px;
+  margin-bottom:48px;
+}
+.progress div{
+  flex:1;
+  height:4px;
+  border-radius:999px;
+  background:rgba(255,255,255,.1);
+}
+.progress .active{background:#D4AF37;}
+
+h1{
+  font-size:36px;
+  font-weight:900;
+  font-style:italic;
+  line-height:1.05;
+}
+h1 span{color:#D4AF37;}
+.step{
+  font-size:10px;
+  letter-spacing:.2em;
+  font-weight:700;
+  color:#6b7280;
+  margin-bottom:40px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:16px;
+}
+
+.genre{
+  position:relative;
+  height:120px;
+  border-radius:28px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.05);
+  cursor:pointer;
+  transition:.3s;
+}
+.genre.selected{
+  border-color:#D4AF37;
+  box-shadow:0 0 20px rgba(212,175,55,.2);
+}
+.genre img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  opacity:.35;
+}
+.genre::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to top,#000,transparent);
+}
+.label{
+  position:absolute;
+  bottom:16px;
+  left:16px;
+  font-size:10px;
+  font-weight:900;
+  font-style:italic;
+  letter-spacing:.15em;
+  color:rgba(255,255,255,.35);
+}
+.genre.selected .label{color:#fff;}
+
+.footer{
+  margin-top:auto;
+  padding-top:24px;
+}
+.btn{
+  width:100%;
+  padding:20px;
+  border-radius:24px;
+  background:#121212;
+  border:1px solid rgba(255,255,255,.05);
+  color:#fff;
+  font-size:11px;
+  font-weight:900;
+  font-style:italic;
+  letter-spacing:.4em;
+  opacity:.25;
+}
+.btn.enabled{opacity:1;}
+</style>
+</head>
+
+<body>
+<div class="container">
+  <div class="progress">
+    <div class="active"></div>
+    <div class="active"></div>
+  </div>
+
+  <h1>DEFINE YOUR<br><span>VIBE.</span></h1>
+  <div class="step">STEP 02 / PICK GENRES THAT MOVE YOU</div>
+
+  <div class="grid" id="grid"></div>
+
+  <div class="footer">
+    <button class="btn" id="finish">CONTINUE</button>
+  </div>
+</div>
+
+<script>
+const genres=[
+  ['ACTION','https://images.unsplash.com/photo-1593062096033-9a26b09da705?w=600'],
+  ['DRAMA','https://images.unsplash.com/photo-1485846234645-a62644f84728?w=600'],
+  ['SCI-FI','https://images.unsplash.com/photo-1506318137071-a8e063b4b4bf?w=600'],
+  ['COMEDY','https://images.unsplash.com/photo-1527224857830-43a7acc85260?w=600'],
+  ['HORROR','https://images.unsplash.com/photo-1505632958218-4f23394784a6?w=600'],
+  ['ROMANCE','https://images.unsplash.com/photo-1518133910546-b6c2fb7d79e3?w=600']
+];
+
+const grid=document.getElementById('grid');
+const btn=document.getElementById('finish');
+
+genres.forEach(g=>{
+  const el=document.createElement('div');
+  el.className='genre';
+  el.innerHTML=`<img src="${g[1]}"><div class="label">${g[0]}</div>`;
+  el.onclick=()=>{
+    el.classList.toggle('selected');
+    btn.classList.add('enabled');
+  };
+  grid.appendChild(el);
+});
+
+btn.onclick=()=>{
+  if(btn.classList.contains('enabled')){
+    alert('Preferences saved 🎉');
+  }
+};
+</script>
+</body>
+</html>
